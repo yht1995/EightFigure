@@ -101,6 +101,7 @@
   <ItemGroup>
     <ClInclude Include="EightFigure.h" />
     <ClInclude Include="EightFigureDlg.h" />
+    <ClInclude Include="EightFigureState.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -108,6 +109,7 @@
   <ItemGroup>
     <ClCompile Include="EightFigure.cpp" />
     <ClCompile Include="EightFigureDlg.cpp" />
+    <ClCompile Include="EightFigureState.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
