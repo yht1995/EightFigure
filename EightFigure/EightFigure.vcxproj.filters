@@ -36,6 +36,12 @@
     <ClInclude Include="EightFigureState.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="SearchCore.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DFS.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EightFigure.cpp">
@@ -48,6 +54,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="EightFigureState.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SearchCore.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DFS.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

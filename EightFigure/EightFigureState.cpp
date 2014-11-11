@@ -4,10 +4,12 @@
 
 EightFigureState::EightFigureState(void)
 {
+    father = NULL;
 }
 
 EightFigureState::EightFigureState(char *data)
 {
+    father = NULL;
     this->data = 0;
     for (int i = 0;i<9;i++)
     {
@@ -155,4 +157,9 @@ int EightFigureState::InverseOrder()
 bool EightFigureState::CanSolve(EightFigureState c)
 {
     return((this->InverseOrder()%2) == (c.InverseOrder()%2));
+}
+
+void EightFigureState::operator=(EightFigureState c)
+{
+    this->data = c.data;
 }

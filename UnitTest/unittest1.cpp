@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 #include "../EightFigure/EightFigureState.h"
+#include "../EightFigure/SearchCore.h"
+#include "../EightFigure/DFS.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -44,10 +46,22 @@ namespace UnitTest
         TEST_METHOD(CanSlove)
         {
             char data1[9] = {1,2,3,4,5,6,7,8,0};
-            char data2[9] = {1,2,3,4,5,6,7,0,8};
+            char data2[9] = {1,2,5,3,4,6,7,0,8};
             EightFigureState state1(data1);
             EightFigureState state2(data2);
             Assert::AreEqual(state1.CanSolve(state2),true);
         }
 	};
+    TEST_CLASS(DFSClass)
+    {
+        TEST_METHOD(DFSTest)
+        {
+            char data1[9] = {1,2,3,4,5,6,7,8,0};
+            char data2[9] = {1,2,5,3,4,6,7,0,8};
+            EightFigureState state1(data1);
+            EightFigureState state2(data2);
+            DFS dfs(state1,state2);
+            Assert::AreEqual(dfs.Search(),1);
+        }
+    };
 }

@@ -12,6 +12,8 @@ private:
     unsigned int data;
     void swap(char& a,char& b);
 public:
+    EightFigureState *father;
+
     EightFigureState(void);
     EightFigureState(char *data);
     ~EightFigureState(void);
@@ -19,10 +21,11 @@ public:
     bool Move(Direction direction);
     int InverseOrder();
     bool CanSolve(EightFigureState c);
-    bool operator == (const EightFigureState c);
+    bool operator == (EightFigureState c);
+    void operator = (EightFigureState c);
 };
 
-inline bool EightFigureState::operator == (const EightFigureState c)
+inline bool EightFigureState::operator == (EightFigureState c)
 {
     return (this->data == c.data);
 }
