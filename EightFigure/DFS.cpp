@@ -4,17 +4,13 @@
 
 DFS::DFS(void)
 {
-    open.clear();
     route.clear();
-    path.clear();
 }
 
 DFS::DFS(EightFigureState startState,EightFigureState targetState)
     :SearchCore(startState,targetState)
 {
-    open.clear();
     route.clear();
-    path.clear();
 }
 
 
@@ -22,9 +18,8 @@ DFS::~DFS(void)
 {
 }
 
-int DFS::Search()
+bool DFS::Search()
 {
-    idx =0;
     startTime = clock();
     EightFigureState state,temp;
     route.push_back(startState);

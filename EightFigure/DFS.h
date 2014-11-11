@@ -7,12 +7,11 @@ class DFS :
 public:
     DFS(void);
     DFS(EightFigureState startState,EightFigureState targetState);
-    int Search();
+    bool Search();
     void SetDepth(int depth);
     ~DFS(void);
 private:
     int depth;
-    int idx;
     std::vector<EightFigureState> route;
     std::stack<EightFigureState> s;
 };
