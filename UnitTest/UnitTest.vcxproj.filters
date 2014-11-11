@@ -38,5 +38,8 @@
     <ClCompile Include="..\EightFigure\SearchCore.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\EightFigure\WFS.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

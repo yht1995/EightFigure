@@ -3,6 +3,7 @@
 #include "../EightFigure/EightFigureState.h"
 #include "../EightFigure/SearchCore.h"
 #include "../EightFigure/DFS.h"
+#include "../EightFigure/WFS.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -51,6 +52,16 @@ namespace UnitTest
             EightFigureState state2(data2);
             Assert::AreEqual(state1.CanSolve(state2),true);
         }
+        TEST_METHOD(SetDataArray)
+        {
+            char data1[9] = {1,2,3,4,5,6,7,8,0};
+            char data2[9] = {1,2,3,4,5,6,7,8,9};
+            char data3[9] = {1,2,3,4,5,6,6,0};
+            EightFigureState state;
+            Assert::AreEqual(state.SetDataArray(data1),true);
+            Assert::AreEqual(state.SetDataArray(data2),false);
+            Assert::AreEqual(state.SetDataArray(data3),false);
+        }
 	};
     TEST_CLASS(DFSClass)
     {
@@ -61,7 +72,20 @@ namespace UnitTest
             EightFigureState state1(data1);
             EightFigureState state2(data2);
             DFS dfs(state1,state2);
-            Assert::AreEqual(dfs.Search(),1);
+            Assert::AreEqual(dfs.Search(),true);
+        }
+    };
+
+    TEST_CLASS(WFSClass)
+    {
+        TEST_METHOD(WFSTest)
+        {
+            char data1[9] = {1,2,3,4,5,6,7,8,0};
+            char data2[9] = {1,2,5,3,4,6,0,7,8};
+            EightFigureState state1(data1);
+            EightFigureState state2(data2);
+            DFS dfs(state1,state2);
+            Assert::AreEqual(dfs.Search(),true);
         }
     };
 }
