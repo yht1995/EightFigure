@@ -1,4 +1,5 @@
 #pragma once
+
 enum Direction
 {
     up = 0,
@@ -9,14 +10,15 @@ enum Direction
 class EightFigureState
 {
 private:
-    unsigned int data;
     void swap(char& a,char& b);
 public:
-    EightFigureState *father;
-
+    unsigned int data;
+    int selfIdx;
+    int fatherIdx;
     EightFigureState(void);
     EightFigureState(char *data);
     ~EightFigureState(void);
+    void SetDataArray(char *data);
     char* GetDataArray(char *data);
     bool Move(Direction direction);
     int InverseOrder();

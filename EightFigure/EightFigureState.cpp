@@ -4,12 +4,14 @@
 
 EightFigureState::EightFigureState(void)
 {
-    father = NULL;
+    selfIdx = NULL;
+    fatherIdx = NULL;
 }
 
 EightFigureState::EightFigureState(char *data)
 {
-    father = NULL;
+    selfIdx = NULL;
+    fatherIdx = NULL;
     this->data = 0;
     for (int i = 0;i<9;i++)
     {
@@ -162,4 +164,15 @@ bool EightFigureState::CanSolve(EightFigureState c)
 void EightFigureState::operator=(EightFigureState c)
 {
     this->data = c.data;
+    this->selfIdx = c.selfIdx;
+    this->fatherIdx = c.fatherIdx;
+}
+
+void EightFigureState::SetDataArray(char *data)
+{
+    this->data = 0;
+    for (int i = 0;i<9;i++)
+    {
+        this->data = this->data * 10 + data[i];
+    }
 }

@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "EightFigureState.h"
-
+const int MAXSTATES = 362882;
 class SearchCore
 {
 public:
@@ -17,6 +17,7 @@ protected:
     EightFigureState startState;
     EightFigureState targetState;
     std::vector<EightFigureState> path;
+    std::hash_set<unsigned int> open;
     clock_t startTime;
     clock_t stopTime;
 };

@@ -32,3 +32,12 @@ time_t SearchCore::GetTime()
 {
     return((stopTime - startTime)/CLOCKS_PER_SEC*1000);
 }
+
+void SearchCore::GetPath(std::vector<EightFigureState> &path)
+{
+    path.clear();
+    for (unsigned int i = 0;i<this->path.size();i++)
+    {
+        path.push_back(this->path[i]);
+    }
+}
