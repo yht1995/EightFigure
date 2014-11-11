@@ -72,6 +72,7 @@ bool AStar::Search()
     startTime = clock();
     EightFigureState state,temp;
     startState.fVaule = ClacManhattan(startState,startState) + ClacManhattan(startState,targetState);
+    close.insert(startState.data);
     route.push_back(startState);
     q.push(startState);
     do 

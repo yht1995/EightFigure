@@ -30,9 +30,9 @@ SearchCore::~SearchCore()
 {
 }
 
-double SearchCore::GetTime()
+int SearchCore::GetTime()
 {
-    return(static_cast<double>(stopTime - startTime)/CLOCKS_PER_SEC*1000);
+    return(static_cast<int>(stopTime - startTime)*1000/CLOCKS_PER_SEC);
 }
 
 void SearchCore::GetPath(std::vector<EightFigureState> &path)

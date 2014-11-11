@@ -8,7 +8,7 @@ class AStar :
 struct cmp{
     bool operator ()(EightFigureState &a,EightFigureState &b)
     {
-        return (a.fVaule>b.fVaule);
+        return (a.fVaule<b.fVaule);
     }
 };
 public:

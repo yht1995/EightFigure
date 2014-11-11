@@ -11,7 +11,7 @@ public:
     void SetStart(EightFigureState state);
     void SetTarget(EightFigureState state);
     void GetPath(std::vector<EightFigureState> &path);
-    double GetTime();
+    int GetTime();
     virtual bool Search() = 0;
 protected:
     EightFigureState startState;
