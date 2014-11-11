@@ -46,7 +46,7 @@ namespace UnitTest
         TEST_METHOD(CanSlove)
         {
             char data1[9] = {1,2,3,4,5,6,7,8,0};
-            char data2[9] = {1,2,5,3,4,6,7,0,8};
+            char data2[9] = {1,2,5,3,4,6,0,7,8};
             EightFigureState state1(data1);
             EightFigureState state2(data2);
             Assert::AreEqual(state1.CanSolve(state2),true);
@@ -57,7 +57,7 @@ namespace UnitTest
         TEST_METHOD(DFSTest)
         {
             char data1[9] = {1,2,3,4,5,6,7,8,0};
-            char data2[9] = {1,2,5,3,4,6,7,0,8};
+            char data2[9] = {1,2,5,3,4,6,0,7,8};
             EightFigureState state1(data1);
             EightFigureState state2(data2);
             DFS dfs(state1,state2);

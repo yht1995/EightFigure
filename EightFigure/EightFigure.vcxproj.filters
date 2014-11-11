@@ -42,6 +42,9 @@
     <ClInclude Include="DFS.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="DlgSet.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EightFigure.cpp">
@@ -60,6 +63,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="DFS.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgSet.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

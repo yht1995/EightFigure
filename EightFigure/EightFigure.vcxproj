@@ -100,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DFS.h" />
+    <ClInclude Include="DlgSet.h" />
     <ClInclude Include="EightFigure.h" />
     <ClInclude Include="EightFigureDlg.h" />
     <ClInclude Include="EightFigureState.h" />
@@ -110,6 +111,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DFS.cpp" />
+    <ClCompile Include="DlgSet.cpp" />
     <ClCompile Include="EightFigure.cpp" />
     <ClCompile Include="EightFigureDlg.cpp" />
     <ClCompile Include="EightFigureState.cpp" />
