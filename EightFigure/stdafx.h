@@ -14,6 +14,7 @@
 #include <queue>
 #include <time.h>
 #include <hash_set>
+#include <algorithm>
 #include "targetver.h"
 
 #define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS      // 某些 CString 构造函数将是显式的

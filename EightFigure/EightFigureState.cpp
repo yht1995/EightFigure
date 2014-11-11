@@ -110,17 +110,13 @@ bool EightFigureState::Move(Direction direction)
     default:
         break;
     }
+    this->data = 0;
     for (int r = 1;r <= 3;r++)
     {
         for (int c = 1;c <= 3;c++)
         {
-            array[(r-1)*3+(c-1)] = data[r][c];
+            this->data = this->data * 10 + data[r][c];
         }
-    }
-    this->data = 0;
-    for (int i = 0;i<9;i++)
-    {
-        this->data = this->data * 10 + array[i];
     }
     return result;
 }

@@ -101,6 +101,7 @@ BEGIN_MESSAGE_MAP(CEightFigureDlg, CDialogEx)
     ON_BN_CLICKED(IDC_BUTTON_NEXT, &CEightFigureDlg::OnBnClickedButtonNext)
     ON_BN_CLICKED(IDC_BUTTON_SET_START, &CEightFigureDlg::OnBnClickedButtonSetStart)
     ON_EN_CHANGE(IDC_EDIT_CUR, &CEightFigureDlg::OnEnChangeEditCur)
+    ON_BN_CLICKED(IDC_BUTTON_RAND, &CEightFigureDlg::OnBnClickedButtonRand)
 END_MESSAGE_MAP()
 
 
@@ -141,6 +142,7 @@ BOOL CEightFigureDlg::OnInitDialog()
     comboType.AddString(_T("A*"));
     btnNext.EnableWindow(FALSE);
     btnForward.EnableWindow(FALSE);
+    srand(time(NULL));
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
@@ -368,7 +370,7 @@ void CEightFigureDlg::OnBnClickedOk()
         editTot.SetWindowTextW(str);
         str.Format(_T("%d"),cur+1);
         editCur.SetWindowTextW(str);
-        str.Format(_T("%lf"),search->GetTime());
+        str.Format(_T("%d(ms)"),search->GetTime());
         editTime.SetWindowTextW(str);
         btnSearch.EnableWindow(TRUE);
         btnForward.EnableWindow(FALSE);
@@ -377,7 +379,8 @@ void CEightFigureDlg::OnBnClickedOk()
     else
     {
         MessageBox(_T("无解"), _T("出错啦"), MB_OK | MB_ICONINFORMATION);
-        btnSearch.EnableWindow(FALSE);
+        btnSearch.EnableWindow(TRUE);
+        btnNext.EnableWindow(FALSE);
         btnForward.EnableWindow(FALSE);
     }
 }
@@ -440,4 +443,31 @@ void CEightFigureDlg::OnEnChangeEditCur()
 
     // TODO:  在此添加控件通知处理程序代码
 
+}
+
+
+void CEightFigureDlg::OnBnClickedButtonRand()
+{
+    // TODO: 在此添加控件通知处理程序代码
+    std::vector<char> vstart,vtarget;
+    char startArray[9],targetArray[9];
+    for (char i = 0;i<9;i++)
+    {
+        vstart.push_back(i);
+        vtarget.push_back(i);
+    }
+    do 
+    {
+        random_shuffle(vstart.begin(),vstart.end());
+        random_shuffle(vtarget.begin(),vtarget.end());
+        for (int i = 0;i<9;i++)
+        {
+            startArray[i] = vstart[i];
+            targetArray[i] = vtarget[i];
+        }
+        start.SetDataArray(startArray);
+        target.SetDataArray(targetArray);
+    }while(!start.CanSolve(target));
+    SetPicB(start);
+    SetPicC(target);
 }

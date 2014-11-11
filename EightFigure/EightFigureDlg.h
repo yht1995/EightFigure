@@ -93,4 +93,6 @@ public:
     afx_msg void OnEnChangeEditCur();
 private:
     CEdit editTime;
+public:
+    afx_msg void OnBnClickedButtonRand();
 };
