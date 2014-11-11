@@ -4,12 +4,17 @@
 
 DFS::DFS(void)
 {
+    open.clear();
+    route.clear();
+    path.clear();
 }
 
 DFS::DFS(EightFigureState startState,EightFigureState targetState)
     :SearchCore(startState,targetState)
 {
     open.clear();
+    route.clear();
+    path.clear();
 }
 
 
@@ -19,8 +24,10 @@ DFS::~DFS(void)
 
 int DFS::Search()
 {
+    idx =0;
     startTime = clock();
     EightFigureState state,temp;
+    route.push_back(startState);
     s.push(startState);
     do 
     {
@@ -28,11 +35,14 @@ int DFS::Search()
         s.pop();
         if (state == targetState)
         {
-            while (state.father)
+            path.clear();
+            while (state.fatherIdx>0)
             {
                 path.push_back(state);
-                state = *state.father;
+                state = route[state.fatherIdx];
             }
+            path.push_back(state);
+            path.push_back(startState);
             stopTime = clock();
             return true;
         }
@@ -41,15 +51,17 @@ int DFS::Search()
             temp = state;
             if (temp.Move((Direction)i))
             {
-                if (!Exist(temp))
+                if (!open.count(temp.data))
                 {
-                    temp.father = &state;
+                    temp.selfIdx = route.size();
+                    temp.fatherIdx = state.selfIdx;
+                    route.push_back(temp);
                     s.push(temp);
-                    open.push_back(temp);
+                    open.insert(temp.data);
                 }
             }
         }
-    } while (!s.empty());
+    }while (!s.empty());
     stopTime = clock();
     return false;
 }
@@ -59,14 +71,3 @@ void DFS::SetDepth(int depth)
     this->depth = depth;
 }
 
-bool DFS::Exist(EightFigureState state)
-{
-    for (int i =0;i<open.size();i++)
-    {
-        if (state == open[i])
-        {
-            return true;
-        }
-    }
-    return false;
-}
