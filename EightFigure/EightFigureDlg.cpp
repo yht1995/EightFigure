@@ -89,6 +89,7 @@ void CEightFigureDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_EDIT_TOT, editTot);
     DDX_Control(pDX, IDC_BUTTON_FORWARD, btnForward);
     DDX_Control(pDX, IDC_BUTTON_NEXT, btnNext);
+    DDX_Control(pDX, IDC_EDIT_TMIE, editTime);
 }
 
 BEGIN_MESSAGE_MAP(CEightFigureDlg, CDialogEx)
@@ -137,6 +138,7 @@ BOOL CEightFigureDlg::OnInitDialog()
 	// TODO: 在此添加额外的初始化代码
     comboType.AddString(_T("DFS"));
     comboType.AddString(_T("WFS"));
+    comboType.AddString(_T("A*"));
     btnNext.EnableWindow(FALSE);
     btnForward.EnableWindow(FALSE);
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
@@ -343,11 +345,14 @@ void CEightFigureDlg::OnBnClickedOk()
     SearchCore *search;
     switch (comboType.GetCurSel())
     {
-    case(0):
+    case(1):
         search = new DFS(start,target);
         break;
-    case(1):
+    case(2):
         search = new WFS(start,target);
+        break;
+    case(0):
+        search = new AStar(start,target);
         break;
     default:
         btnSearch.EnableWindow(TRUE);
@@ -363,6 +368,8 @@ void CEightFigureDlg::OnBnClickedOk()
         editTot.SetWindowTextW(str);
         str.Format(_T("%d"),cur+1);
         editCur.SetWindowTextW(str);
+        str.Format(_T("%lf"),search->GetTime());
+        editTime.SetWindowTextW(str);
         btnSearch.EnableWindow(TRUE);
         btnForward.EnableWindow(FALSE);
         btnNext.EnableWindow(TRUE);

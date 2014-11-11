@@ -23,6 +23,7 @@ bool WFS::Search()
     startTime = clock();
     EightFigureState state,temp;
     route.push_back(startState);
+    close.insert(startState.data);
     q.push(startState);
     do 
     {
@@ -46,13 +47,13 @@ bool WFS::Search()
             temp = state;
             if (temp.Move((Direction)i))
             {
-                if (!open.count(temp.data))
+                if (!close.count(temp.data))
                 {
                     temp.selfIdx = route.size();
                     temp.fatherIdx = state.selfIdx;
                     route.push_back(temp);
                     q.push(temp);
-                    open.insert(temp.data);
+                    close.insert(temp.data);
                 }
             }
         }

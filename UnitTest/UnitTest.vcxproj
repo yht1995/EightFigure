@@ -87,6 +87,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\EightFigure\AStar.cpp" />
     <ClCompile Include="..\EightFigure\DFS.cpp" />
     <ClCompile Include="..\EightFigure\EightFigureState.cpp" />
     <ClCompile Include="..\EightFigure\SearchCore.cpp" />

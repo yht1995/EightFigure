@@ -7,6 +7,7 @@
 #include "EightFigureState.h"
 #include "DFS.h"
 #include "WFS.h"
+#include "AStar.h"
 #include "DlgSet.h"
 
 // CEightFigureDlg ¶Ô»°¿ò
@@ -90,4 +91,6 @@ public:
     afx_msg void OnBnClickedButtonNext();
     afx_msg void OnBnClickedButtonSetStart();
     afx_msg void OnEnChangeEditCur();
+private:
+    CEdit editTime;
 };

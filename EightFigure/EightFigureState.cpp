@@ -125,13 +125,6 @@ bool EightFigureState::Move(Direction direction)
     return result;
 }
 
-void EightFigureState::swap(char& a,char& b)
-{
-    char t = a;
-    a = b;
-    b = t;
-}
-
 int EightFigureState::InverseOrder()
 {
     char array[9];
@@ -154,18 +147,6 @@ int EightFigureState::InverseOrder()
         }
     }
     return inverseOrder;
-}
-
-bool EightFigureState::CanSolve(EightFigureState c)
-{
-    return((this->InverseOrder()%2) == (c.InverseOrder()%2));
-}
-
-void EightFigureState::operator=(EightFigureState c)
-{
-    this->data = c.data;
-    this->selfIdx = c.selfIdx;
-    this->fatherIdx = c.fatherIdx;
 }
 
 bool EightFigureState::SetDataArray(char *data)
@@ -206,4 +187,9 @@ bool EightFigureState::SetDataArray(char *data)
         this->data = this->data * 10 + data[i];
     }
     return true;
+}
+
+bool EightFigureState::CanSolve(EightFigureState c)
+{
+    return((this->InverseOrder()%2) == (c.InverseOrder()%2));
 }

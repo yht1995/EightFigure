@@ -4,6 +4,7 @@
 #include "../EightFigure/SearchCore.h"
 #include "../EightFigure/DFS.h"
 #include "../EightFigure/WFS.h"
+#include "../EightFigure/AStar.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -67,8 +68,8 @@ namespace UnitTest
     {
         TEST_METHOD(DFSTest)
         {
-            char data1[9] = {1,2,3,4,5,6,7,8,0};
-            char data2[9] = {1,2,5,3,4,6,0,7,8};
+            char data1[9] = {6,5,3,8,2,0,4,1,7};
+            char data2[9] = {5,1,0,6,4,8,2,7,3};
             EightFigureState state1(data1);
             EightFigureState state2(data2);
             DFS dfs(state1,state2);
@@ -80,12 +81,44 @@ namespace UnitTest
     {
         TEST_METHOD(WFSTest)
         {
-            char data1[9] = {1,2,3,4,5,6,7,8,0};
-            char data2[9] = {1,2,5,3,4,6,0,7,8};
+            char data1[9] = {6,5,3,8,2,0,4,1,7};
+            char data2[9] = {5,1,0,6,4,8,2,7,3};
             EightFigureState state1(data1);
             EightFigureState state2(data2);
             DFS dfs(state1,state2);
             Assert::AreEqual(dfs.Search(),true);
+        }
+    };
+    TEST_CLASS(AStarClass)
+    {
+        //TEST_METHOD(ClacDifference)
+        //{
+        //    char data1[9] = {6,5,3,8,2,0,4,1,7};
+        //    char data2[9] = {5,1,0,6,4,8,2,7,3};
+        //    EightFigureState state1(data1);
+        //    EightFigureState state2(data2);
+        //    AStar aStar(state1,state2);
+        //    aStar.ClacDifference(state1);
+        //    Assert::AreEqual(state1.fVaule,9);
+        //}
+        //TEST_METHOD(ClacManhattan)
+        //{
+        //    char data1[9] = {1,2,3,4,5,6,7,0,8};
+        //    char data2[9] = {1,2,3,4,5,6,7,8,0};
+        //    EightFigureState state1(data1);
+        //    EightFigureState state2(data2);
+        //    AStar aStar(state1,state2);
+        //    aStar.ClacManhattan(state1);
+        //    Assert::AreEqual(state1.fVaule,1);
+        //}
+        TEST_METHOD(AStarTest)
+        {
+            char data1[9] = {6,5,3,8,2,0,4,1,7};
+            char data2[9] = {5,1,0,6,4,8,2,7,3};
+            EightFigureState state1(data1);
+            EightFigureState state2(data2);
+            AStar aStar(state1,state2);
+            Assert::AreEqual(aStar.Search(),true);
         }
     };
 }
