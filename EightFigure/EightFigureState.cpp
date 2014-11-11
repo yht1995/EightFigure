@@ -168,11 +168,42 @@ void EightFigureState::operator=(EightFigureState c)
     this->fatherIdx = c.fatherIdx;
 }
 
-void EightFigureState::SetDataArray(char *data)
+bool EightFigureState::SetDataArray(char *data)
 {
+    bool check[9] = {0,0,0,0,0,0,0,0,0};
+    for (int i = 0;i<9;i++)
+    {
+        if (data[i]<0)
+        {
+            return false;
+        }
+        if (data[i]>8)
+        {
+            return false;
+        }
+    }
+    for (int i = 0;i<9;i++)
+    {
+        if (check[data[i]])
+        {
+            return false;
+        }
+        else
+        {
+            check[data[i]] = true;
+        }
+    }
+    for (int i = 0;i<9;i++)
+    {
+        if (!check[i])
+        {
+            return false;
+        }
+    }
     this->data = 0;
     for (int i = 0;i<9;i++)
     {
         this->data = this->data * 10 + data[i];
     }
+    return true;
 }

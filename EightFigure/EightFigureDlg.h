@@ -6,6 +6,7 @@
 #include "afxwin.h"
 #include "EightFigureState.h"
 #include "DFS.h"
+#include "WFS.h"
 #include "DlgSet.h"
 
 // CEightFigureDlg ¶Ô»°¿ò
@@ -88,4 +89,5 @@ private:
 public:
     afx_msg void OnBnClickedButtonNext();
     afx_msg void OnBnClickedButtonSetStart();
+    afx_msg void OnEnChangeEditCur();
 };

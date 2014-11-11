@@ -12,6 +12,8 @@ void SearchCore::SetTarget(EightFigureState state)
 
 SearchCore::SearchCore()
 {
+    open.clear();
+    path.clear();
     startTime = 0;
     stopTime = 0;
 }
@@ -36,8 +38,8 @@ time_t SearchCore::GetTime()
 void SearchCore::GetPath(std::vector<EightFigureState> &path)
 {
     path.clear();
-    for (unsigned int i = 0;i<this->path.size();i++)
+    for (unsigned int i = 1;i<=this->path.size();i++)
     {
-        path.push_back(this->path[i]);
+        path.push_back(this->path[this->path.size() - i]);
     }
 }

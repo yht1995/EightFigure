@@ -99,6 +99,7 @@ BEGIN_MESSAGE_MAP(CEightFigureDlg, CDialogEx)
     ON_BN_CLICKED(IDOK, &CEightFigureDlg::OnBnClickedOk)
     ON_BN_CLICKED(IDC_BUTTON_NEXT, &CEightFigureDlg::OnBnClickedButtonNext)
     ON_BN_CLICKED(IDC_BUTTON_SET_START, &CEightFigureDlg::OnBnClickedButtonSetStart)
+    ON_EN_CHANGE(IDC_EDIT_CUR, &CEightFigureDlg::OnEnChangeEditCur)
 END_MESSAGE_MAP()
 
 
@@ -134,7 +135,10 @@ BOOL CEightFigureDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
-
+    comboType.AddString(_T("DFS"));
+    comboType.AddString(_T("WFS"));
+    btnNext.EnableWindow(FALSE);
+    btnForward.EnableWindow(FALSE);
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
@@ -336,22 +340,39 @@ void CEightFigureDlg::OnBnClickedOk()
 {
     // TODO: 在此添加控件通知处理程序代码
     btnSearch.EnableWindow(FALSE);
-    DFS dfs(start,target);
-    if (dfs.Search())
+    SearchCore *search;
+    switch (comboType.GetCurSel())
     {
-        dfs.GetPath(path);
-        SetPicA(path[0]);
+    case(0):
+        search = new DFS(start,target);
+        break;
+    case(1):
+        search = new WFS(start,target);
+        break;
+    default:
+        btnSearch.EnableWindow(TRUE);
+        return;
     }
-    cur = 0;
-    CString str;
-    str.Format(_T("%d"),path.size());
-    editTot.SetWindowTextW(str);
-    str.Format(_T("%d"),cur+1);
-    editCur.SetWindowTextW(str);
-    btnSearch.EnableWindow(TRUE);
-    btnForward.EnableWindow(FALSE);
-    btnNext.EnableWindow(TRUE);
-    //CDialogEx::OnOK();
+    if (search->Search())
+    {
+        search->GetPath(path);
+        SetPicA(path[0]);
+        cur = 0;
+        CString str;
+        str.Format(_T("%d"),path.size());
+        editTot.SetWindowTextW(str);
+        str.Format(_T("%d"),cur+1);
+        editCur.SetWindowTextW(str);
+        btnSearch.EnableWindow(TRUE);
+        btnForward.EnableWindow(FALSE);
+        btnNext.EnableWindow(TRUE);
+    }
+    else
+    {
+        MessageBox(_T("无解"), _T("出错啦"), MB_OK | MB_ICONINFORMATION);
+        btnSearch.EnableWindow(FALSE);
+        btnForward.EnableWindow(FALSE);
+    }
 }
 
 void CEightFigureDlg::OnBnClickedButtonForward()
@@ -365,7 +386,7 @@ void CEightFigureDlg::OnBnClickedButtonForward()
     {
         btnForward.EnableWindow(FALSE);
     }
-    if (cur < path.size())
+    if (cur < (int)path.size())
     {
         btnNext.EnableWindow(TRUE);
     }
@@ -378,7 +399,7 @@ void CEightFigureDlg::OnBnClickedButtonNext()
     SetPicA(path[++cur]);
     str.Format(_T("%d"),cur+1);
     editCur.SetWindowTextW(str);
-    if (cur > 1)
+    if (cur >= 1)
     {
         btnForward.EnableWindow(TRUE);
     }
@@ -393,5 +414,23 @@ void CEightFigureDlg::OnBnClickedButtonSetStart()
 {
     // TODO: 在此添加控件通知处理程序代码
     DlgSet dlg;
-    dlg.DoModal();
+    if (dlg.DoModal() == IDOK)
+    {
+        start = dlg.start;
+        target = dlg.target;
+        SetPicB(start);
+        SetPicC(target);
+    }
+}
+
+
+void CEightFigureDlg::OnEnChangeEditCur()
+{
+    // TODO:  如果该控件是 RICHEDIT 控件，它将不
+    // 发送此通知，除非重写 CDialogEx::OnInitDialog()
+    // 函数并调用 CRichEditCtrl().SetEventMask()，
+    // 同时将 ENM_CHANGE 标志“或”运算到掩码中。
+
+    // TODO:  在此添加控件通知处理程序代码
+
 }

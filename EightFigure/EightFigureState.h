@@ -18,7 +18,7 @@ public:
     EightFigureState(void);
     EightFigureState(char *data);
     ~EightFigureState(void);
-    void SetDataArray(char *data);
+    bool SetDataArray(char *data);
     char* GetDataArray(char *data);
     bool Move(Direction direction);
     int InverseOrder();
