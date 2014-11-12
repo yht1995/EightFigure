@@ -1,24 +1,24 @@
 #include "stdafx.h"
-#include "WFS.h"
+#include "BFS.h"
 
 
-WFS::WFS(void)
+BFS::BFS(void)
 {
     route.clear();
 }
 
-WFS::WFS(EightFigureState startState,EightFigureState targetState)
+BFS::BFS(EightFigureState startState,EightFigureState targetState)
     :SearchCore(startState,targetState)
 {
     route.clear();
 }
 
 
-WFS::~WFS(void)
+BFS::~BFS(void)
 {
 }
 
-bool WFS::Search()
+bool BFS::Search()
 {
     startTime = clock();
     EightFigureState state,temp;
