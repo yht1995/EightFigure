@@ -38,10 +38,10 @@
     <ClCompile Include="..\EightFigure\SearchCore.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\EightFigure\WFS.cpp">
+    <ClCompile Include="..\EightFigure\AStar.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\EightFigure\AStar.cpp">
+    <ClCompile Include="..\EightFigure\BFS.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

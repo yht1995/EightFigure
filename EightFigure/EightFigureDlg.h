@@ -6,7 +6,7 @@
 #include "afxwin.h"
 #include "EightFigureState.h"
 #include "DFS.h"
-#include "WFS.h"
+#include "BFS.h"
 #include "AStar.h"
 #include "DlgSet.h"
 
@@ -95,4 +95,6 @@ private:
     CEdit editTime;
 public:
     afx_msg void OnBnClickedButtonRand();
+private:
+    int i_editCur;
 };

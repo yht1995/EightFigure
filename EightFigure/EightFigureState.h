@@ -13,6 +13,7 @@ private:
     void swap(char& a,char& b);
 public:
     int data;
+    int depth;
     int selfIdx;
     int fatherIdx;
     int fVaule;

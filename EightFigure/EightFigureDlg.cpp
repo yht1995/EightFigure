@@ -49,6 +49,7 @@ END_MESSAGE_MAP()
 
 CEightFigureDlg::CEightFigureDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CEightFigureDlg::IDD, pParent)
+    , i_editCur(0)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -90,6 +91,7 @@ void CEightFigureDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_BUTTON_FORWARD, btnForward);
     DDX_Control(pDX, IDC_BUTTON_NEXT, btnNext);
     DDX_Control(pDX, IDC_EDIT_TMIE, editTime);
+    DDX_Text(pDX, IDC_EDIT_CUR, i_editCur);
 }
 
 BEGIN_MESSAGE_MAP(CEightFigureDlg, CDialogEx)
@@ -138,11 +140,11 @@ BOOL CEightFigureDlg::OnInitDialog()
 
 	// TODO: 在此添加额外的初始化代码
     comboType.AddString(_T("DFS"));
-    comboType.AddString(_T("WFS"));
+    comboType.AddString(_T("BFS"));
     comboType.AddString(_T("A*"));
     btnNext.EnableWindow(FALSE);
     btnForward.EnableWindow(FALSE);
-    srand(time(NULL));
+    srand((unsigned int)time(NULL));
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
@@ -347,11 +349,11 @@ void CEightFigureDlg::OnBnClickedOk()
     SearchCore *search;
     switch (comboType.GetCurSel())
     {
-    case(1):
+    case(2):
         search = new DFS(start,target);
         break;
-    case(2):
-        search = new WFS(start,target);
+    case(1):
+        search = new BFS(start,target);
         break;
     case(0):
         search = new AStar(start,target);
@@ -442,7 +444,13 @@ void CEightFigureDlg::OnEnChangeEditCur()
     // 同时将 ENM_CHANGE 标志“或”运算到掩码中。
 
     // TODO:  在此添加控件通知处理程序代码
-
+    UpdateData(TRUE);
+    if (i_editCur>0 && i_editCur <= (int)path.size())
+    {
+        cur = i_editCur - 1;
+        SetPicA(path[cur]);
+    }
+    UpdateData(FALSE);
 }
 
 

@@ -25,7 +25,7 @@ EightFigureState::~EightFigureState(void)
 
 char* EightFigureState::GetDataArray(char *data)
 {
-    unsigned int temp = this->data;
+    int temp = this->data;
     for (int i = 0;i<9;i++)
     {
         data[8-i] = temp % 10;
@@ -43,82 +43,31 @@ char* EightFigureState::GetDataArray(char *data)
  //4      0   0   0   0   0
 bool EightFigureState::Move(Direction direction)
 {
-    char data[5][5];
-    bool result;
-    memset(data,0,25*sizeof(char));
-    char array[9];
-    GetDataArray(array);
-    int zeroc,zeror;
-    for (int r = 1;r <= 3;r++)
+    const int move[9][4]={{-1,3,-1,1},{-1,4,0,2},{-1,5,1,-1},{0,6,-1,4},
+    {1,7,3,5},{2,8,4,-1},{3,-1,-1,7},{4,-1,6,8},{5,-1,7,-1}};
+    int temp = this->data;
+    int zeroPos;
+    char data[9];
+    for (int i = 8;i>=0;i--)
     {
-        for (int c = 1;c <= 3;c++)
+        data[i] = temp % 10;
+        if (data[i] ==0)
         {
-            data[r][c] = array[(r-1)*3+(c-1)];
-            if (data[r][c] == 0)
-            {
-                zeroc = c;
-                zeror = r;
-            }
+            zeroPos = i;
         }
+        temp = temp /10;
     }
-    switch (direction)
+    if (move[zeroPos][direction] == -1)
     {
-    case up:
-        if (data[zeror-1][zeroc])
-        {
-            swap(data[zeror][zeroc],data[zeror-1][zeroc]);
-            result = true;
-        }
-        else
-        {
-            result = false;
-        }
-        break;
-    case down:
-        if (data[zeror+1][zeroc])
-        {
-            swap(data[zeror][zeroc],data[zeror+1][zeroc]);
-            result = true;
-        }
-        else
-        {
-            result = false;
-        }
-        break;
-    case left:
-        if (data[zeror][zeroc-1])
-        {
-            swap(data[zeror][zeroc],data[zeror][zeroc-1]);
-            result = true;
-        }
-        else
-        {
-            result = false;
-        }
-        break;
-    case right:
-        if (data[zeror][zeroc+1])
-        {
-            swap(data[zeror][zeroc],data[zeror][zeroc+1]);
-            result = true;
-        }
-        else
-        {
-            result = false;
-        }
-        break;
-    default:
-        break;
+        return false;
     }
-    this->data = 0;
-    for (int r = 1;r <= 3;r++)
+    else
     {
-        for (int c = 1;c <= 3;c++)
-        {
-            this->data = this->data * 10 + data[r][c];
-        }
+        data[zeroPos] = data[move[zeroPos][direction]];
+        data[move[zeroPos][direction]] = 0;
+        SetDataArray(data);
+        return true;
     }
-    return result;
 }
 
 int EightFigureState::InverseOrder()

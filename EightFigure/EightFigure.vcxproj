@@ -111,7 +111,7 @@
     <ClInclude Include="SearchCore.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="WFS.h" />
+    <ClInclude Include="BFS.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AStar.cpp" />
@@ -125,7 +125,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="WFS.cpp" />
+    <ClCompile Include="BFS.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="EightFigure.rc" />

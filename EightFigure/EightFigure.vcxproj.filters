@@ -45,10 +45,10 @@
     <ClInclude Include="DlgSet.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="WFS.h">
+    <ClInclude Include="AStar.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="AStar.h">
+    <ClInclude Include="BFS.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -74,10 +74,10 @@
     <ClCompile Include="DlgSet.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="WFS.cpp">
+    <ClCompile Include="AStar.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="AStar.cpp">
+    <ClCompile Include="BFS.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

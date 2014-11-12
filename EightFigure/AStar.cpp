@@ -71,14 +71,15 @@ bool AStar::Search()
 {
     startTime = clock();
     EightFigureState state,temp;
-    startState.fVaule = ClacManhattan(startState,startState) + ClacManhattan(startState,targetState);
+    startState.depth = 0;
+    startState.fVaule = ClacManhattan(startState,targetState);
     close.insert(startState.data);
     route.push_back(startState);
-    open.push_back(startState);
+    q.push(startState);
     do 
     {
-        state = *GetMinOpen();
-        open.erase(GetMinOpen());
+        state = q.top();
+        q.pop();
         if (state == targetState)
         {
             path.clear();
@@ -97,55 +98,19 @@ bool AStar::Search()
             temp = state;
             if (temp.Move((Direction)i))
             {
-                temp.fVaule = ClacManhattan(startState,temp) + ClacManhattan(temp,targetState);
-                std::vector<EightFigureState>::iterator iter;
-                iter = ExistOpen(temp);
-                if (iter != open.end())
-                {
-                    if (temp.fVaule < iter->fVaule)
-                    {
-                        iter->fatherIdx = state.selfIdx;
-                    }
-                }
+                temp.depth = state.depth + 1;
+                temp.fVaule = temp.depth + ClacManhattan(temp,targetState);
                 if (!close.count(temp.data))
                 {
                     temp.selfIdx = route.size();
                     temp.fatherIdx = state.selfIdx;
                     route.push_back(temp);
-                    open.push_back(temp);
+                    q.push(temp);
                     close.insert(temp.data);
                 }
             }
         }
-    }while (!open.empty());
+    }while (!q.empty());
     stopTime = clock();
     return false;
-}
-
-std::vector<EightFigureState>::iterator AStar::GetMinOpen()
-{
-    std::vector<EightFigureState>::iterator i,minIter;
-    int min = 9999;
-    for (i = open.begin();i != open.end();i++)
-    {
-        if (i->fVaule <= min)
-        {
-            min = i->fVaule;
-            minIter = i;
-        }
-    }
-    return minIter;
-}
-
-std::vector<EightFigureState>::iterator AStar::ExistOpen(EightFigureState state)
-{
-    std::vector<EightFigureState>::iterator i,minIter;
-    for (i = open.begin();i != open.end();i++)
-    {
-        if (*i == state)
-        {
-            return i;
-        }
-    }
-    return open.end();
 }

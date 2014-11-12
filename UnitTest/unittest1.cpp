@@ -3,7 +3,7 @@
 #include "../EightFigure/EightFigureState.h"
 #include "../EightFigure/SearchCore.h"
 #include "../EightFigure/DFS.h"
-#include "../EightFigure/WFS.h"
+#include "../EightFigure/BFS.h"
 #include "../EightFigure/AStar.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -77,16 +77,16 @@ namespace UnitTest
         }
     };
 
-    TEST_CLASS(WFSClass)
+    TEST_CLASS(BFSClass)
     {
-        TEST_METHOD(WFSTest)
+        TEST_METHOD(BFSTest)
         {
             char data1[9] = {6,5,3,8,2,0,4,1,7};
             char data2[9] = {5,1,0,6,4,8,2,7,3};
             EightFigureState state1(data1);
             EightFigureState state2(data2);
-            DFS dfs(state1,state2);
-            Assert::AreEqual(dfs.Search(),true);
+            BFS bfs(state1,state2);
+            Assert::AreEqual(bfs.Search(),true);
         }
     };
     TEST_CLASS(AStarClass)
