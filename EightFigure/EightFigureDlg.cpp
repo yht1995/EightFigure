@@ -92,6 +92,9 @@ void CEightFigureDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_BUTTON_NEXT, btnNext);
     DDX_Control(pDX, IDC_EDIT_TMIE, editTime);
     DDX_Text(pDX, IDC_EDIT_CUR, i_editCur);
+    DDX_Control(pDX, IDC_SLIDER1, sliderSpeed);
+    DDX_Control(pDX, IDC_BUTTON_PLAY, btnPlay);
+    DDX_Control(pDX, IDC_SLIDER_POS, sliderPos);
 }
 
 BEGIN_MESSAGE_MAP(CEightFigureDlg, CDialogEx)
@@ -104,6 +107,9 @@ BEGIN_MESSAGE_MAP(CEightFigureDlg, CDialogEx)
     ON_BN_CLICKED(IDC_BUTTON_SET_START, &CEightFigureDlg::OnBnClickedButtonSetStart)
     ON_EN_CHANGE(IDC_EDIT_CUR, &CEightFigureDlg::OnEnChangeEditCur)
     ON_BN_CLICKED(IDC_BUTTON_RAND, &CEightFigureDlg::OnBnClickedButtonRand)
+    ON_BN_CLICKED(IDC_BUTTON_PLAY, &CEightFigureDlg::OnBnClickedButtonPlay)
+    ON_WM_TIMER()
+    ON_NOTIFY(NM_CUSTOMDRAW, IDC_SLIDER_POS, &CEightFigureDlg::OnNMCustomdrawSliderPos)
 END_MESSAGE_MAP()
 
 
@@ -142,8 +148,11 @@ BOOL CEightFigureDlg::OnInitDialog()
     comboType.AddString(_T("DFS"));
     comboType.AddString(_T("BFS"));
     comboType.AddString(_T("A*"));
+    comboType.SetCurSel(0);
     btnNext.EnableWindow(FALSE);
     btnForward.EnableWindow(FALSE);
+    sliderSpeed.SetRange(0,100);
+    sliderSpeed.SetPos(70);
     srand((unsigned int)time(NULL));
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -345,6 +354,8 @@ void CEightFigureDlg::SetPicC(EightFigureState state)
 void CEightFigureDlg::OnBnClickedOk()
 {
     // TODO: 在此添加控件通知处理程序代码
+    isPlay = false;
+    btnPlay.EnableWindow(FALSE);
     btnSearch.EnableWindow(FALSE);
     SearchCore *search;
     switch (comboType.GetCurSel())
@@ -373,10 +384,13 @@ void CEightFigureDlg::OnBnClickedOk()
         str.Format(_T("%d"),cur+1);
         editCur.SetWindowTextW(str);
         str.Format(_T("%d(ms)"),search->GetTime());
+        sliderPos.SetRange(0,path.size()-1);
         editTime.SetWindowTextW(str);
         btnSearch.EnableWindow(TRUE);
         btnForward.EnableWindow(FALSE);
         btnNext.EnableWindow(TRUE);
+        btnPlay.EnableWindow(TRUE);
+        btnPlay.SetWindowTextW(_T("播放"));
     }
     else
     {
@@ -394,14 +408,15 @@ void CEightFigureDlg::OnBnClickedButtonForward()
     SetPicA(path[--cur]);
     str.Format(_T("%d"),cur+1);
     editCur.SetWindowTextW(str);
-    if (cur == 0)
-    {
+    sliderPos.SetPos(cur);
+    if (cur > 0)
+        btnForward.EnableWindow(TRUE);
+    else
         btnForward.EnableWindow(FALSE);
-    }
-    if (cur < (int)path.size())
-    {
+    if (cur < (int)path.size()-1)
         btnNext.EnableWindow(TRUE);
-    }
+    else
+        btnNext.EnableWindow(FALSE);
 }
 
 void CEightFigureDlg::OnBnClickedButtonNext()
@@ -411,14 +426,15 @@ void CEightFigureDlg::OnBnClickedButtonNext()
     SetPicA(path[++cur]);
     str.Format(_T("%d"),cur+1);
     editCur.SetWindowTextW(str);
-    if (cur >= 1)
-    {
+    sliderPos.SetPos(cur);
+    if (cur > 0)
         btnForward.EnableWindow(TRUE);
-    }
-    if (cur == path.size()-1)
-    {
+    else
+        btnForward.EnableWindow(FALSE);
+    if (cur < (int)path.size()-1)
+        btnNext.EnableWindow(TRUE);
+    else
         btnNext.EnableWindow(FALSE);
-    }
 }
 
 
@@ -478,4 +494,86 @@ void CEightFigureDlg::OnBnClickedButtonRand()
     }while(!start.CanSolve(target));
     SetPicB(start);
     SetPicC(target);
+}
+
+
+void CEightFigureDlg::OnBnClickedButtonPlay()
+{
+    // TODO: 在此添加控件通知处理程序代码
+    if (path.empty())
+    {
+        return;
+    }
+    if (isPlay)
+    {
+        isPlay = false;
+        KillTimer(1);
+        btnPlay.SetWindowTextW(_T("播放"));
+    }
+    else
+    {
+        isPlay = true;
+        sliderSpeed.SetRange(0,100);
+        sliderSpeed.GetPos();
+
+        timeDelta = (100-sliderSpeed.GetPos())*10;
+        SetTimer(1, timeDelta, NULL);
+        btnPlay.SetWindowTextW(_T("停止"));
+    }
+}
+
+
+void CEightFigureDlg::OnTimer(UINT_PTR nIDEvent)
+{
+    // TODO: 在此添加消息处理程序代码和/或调用默认值
+    switch (nIDEvent)
+    {
+    case (1):
+        if (cur>=0&&cur<(int)path.size()-1)
+        {
+            cur++;
+            SetPicA(path[cur]);
+            CString str;
+            str.Format(_T("%d"),cur+1);
+            editCur.SetWindowTextW(str);
+            sliderPos.SetPos(cur);
+            KillTimer(1);
+            timeDelta = (100-sliderSpeed.GetPos())*10;
+            SetTimer(1, timeDelta, NULL);
+        }
+        if (cur == path.size() - 1)
+        {
+            isPlay = false;
+            btnPlay.SetWindowTextW(_T("播放"));
+            KillTimer(1);
+        }
+        break;
+    default:
+        break;
+    }
+    CDialogEx::OnTimer(nIDEvent);
+}
+
+
+void CEightFigureDlg::OnNMCustomdrawSliderPos(NMHDR *pNMHDR, LRESULT *pResult)
+{
+    LPNMCUSTOMDRAW pNMCD = reinterpret_cast<LPNMCUSTOMDRAW>(pNMHDR);
+    // TODO: 在此添加控件通知处理程序代码
+    if (!path.empty())
+    {
+        cur  = sliderPos.GetPos();
+        SetPicA(path[cur]);
+        CString str;
+        str.Format(_T("%d"),cur+1);
+        editCur.SetWindowTextW(str);
+        if (cur > 0)
+            btnForward.EnableWindow(TRUE);
+        else
+            btnForward.EnableWindow(FALSE);
+        if (cur < (int)path.size()-1)
+            btnNext.EnableWindow(TRUE);
+        else
+            btnNext.EnableWindow(FALSE);
+    }
+    *pResult = 0;
 }

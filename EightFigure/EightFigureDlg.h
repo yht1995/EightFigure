@@ -9,6 +9,7 @@
 #include "BFS.h"
 #include "AStar.h"
 #include "DlgSet.h"
+#include "afxcmn.h"
 
 // CEightFigureDlg ¶Ô»°¿ò
 class CEightFigureDlg : public CDialogEx
@@ -72,29 +73,33 @@ private:
     EightFigureState start;
     EightFigureState target;
 
+    CButton btnForward;
+    CButton btnNext;
+    CEdit editTime;
+    CSliderCtrl sliderSpeed;
+    CButton btnPlay;
+
     int cur;
+    int timeDelta;
+    int i_editCur;
+
+    bool isPlay;
 
     std::vector<EightFigureState> path;
-
     void SetPicA(EightFigureState state);
     void SetPicB(EightFigureState state);
     void SetPicC(EightFigureState state);
 public:
     afx_msg void OnBnClickedButtonForward();
     afx_msg void OnBnClickedOk();
-
-
-private:
-    CButton btnForward;
-    CButton btnNext;
-public:
+    afx_msg void OnBnClickedButtonPlay();
+    afx_msg void OnTimer(UINT_PTR nIDEvent);
+    afx_msg void OnBnClickedButtonRand();
     afx_msg void OnBnClickedButtonNext();
     afx_msg void OnBnClickedButtonSetStart();
     afx_msg void OnEnChangeEditCur();
 private:
-    CEdit editTime;
+    CSliderCtrl sliderPos;
 public:
-    afx_msg void OnBnClickedButtonRand();
-private:
-    int i_editCur;
+    afx_msg void OnNMCustomdrawSliderPos(NMHDR *pNMHDR, LRESULT *pResult);
 };
