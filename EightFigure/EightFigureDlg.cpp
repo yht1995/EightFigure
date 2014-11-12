@@ -217,47 +217,71 @@ HCURSOR CEightFigureDlg::OnQueryDragIcon()
 
 void CEightFigureDlg::SetPicA(EightFigureState state)
 {
-    char array[9];
+    char array[9],curArray[9];
     state.GetDataArray(array);
+    picA.GetDataArray(curArray);
 
     CBitmap bitmap1,bitmap2,bitmap3,bitmap4,bitmap5,bitmap6,bitmap7,bitmap8,bitmap9;
     HBITMAP hBmp1,hBmp2,hBmp3,hBmp4,hBmp5,hBmp6,hBmp7,hBmp8,hBmp9;
+    if (curArray[0] != array[0])
+    {
+        bitmap1.LoadBitmap(IDB_BITMAP1+array[0]);
+        hBmp1 = (HBITMAP)bitmap1.GetSafeHandle();
+        picA1.SetBitmap(hBmp1);
+    }
+    if (curArray[1] != array[1])
+    {
+        bitmap2.LoadBitmap(IDB_BITMAP1+array[1]);
+        hBmp2 = (HBITMAP)bitmap2.GetSafeHandle();
+        picA2.SetBitmap(hBmp2);
+    }
+    if (curArray[2] != array[2])
+    {
+        bitmap3.LoadBitmap(IDB_BITMAP1+array[2]);
+        hBmp3 = (HBITMAP)bitmap3.GetSafeHandle();
+        picA3.SetBitmap(hBmp3);
+    }
+    if (curArray[3] != array[3])
+    {
+        bitmap4.LoadBitmap(IDB_BITMAP1+array[3]);
+        hBmp4 = (HBITMAP)bitmap4.GetSafeHandle();
+        picA4.SetBitmap(hBmp4);
+    }
+    if (curArray[4] != array[4])
+    {
+        bitmap5.LoadBitmap(IDB_BITMAP1+array[4]);
+        hBmp5 = (HBITMAP)bitmap5.GetSafeHandle();
+        picA5.SetBitmap(hBmp5);
+    }
 
-    bitmap1.LoadBitmap(IDB_BITMAP1+array[0]);
-    hBmp1 = (HBITMAP)bitmap1.GetSafeHandle();
-    picA1.SetBitmap(hBmp1);
+    if (curArray[5] != array[5])
+    {
+        bitmap6.LoadBitmap(IDB_BITMAP1+array[5]);
+        hBmp6 = (HBITMAP)bitmap6.GetSafeHandle();
+        picA6.SetBitmap(hBmp6);
+    }
 
-    bitmap2.LoadBitmap(IDB_BITMAP1+array[1]);
-    hBmp2 = (HBITMAP)bitmap2.GetSafeHandle();
-    picA2.SetBitmap(hBmp2);
+    if (curArray[6] != array[6])
+    {
+        bitmap7.LoadBitmap(IDB_BITMAP1+array[6]);
+        hBmp7 = (HBITMAP)bitmap7.GetSafeHandle();
+        picA7.SetBitmap(hBmp7);
+    }
 
-    bitmap3.LoadBitmap(IDB_BITMAP1+array[2]);
-    hBmp3 = (HBITMAP)bitmap3.GetSafeHandle();
-    picA3.SetBitmap(hBmp3);
+    if (curArray[7] != array[7])
+    {
+        bitmap8.LoadBitmap(IDB_BITMAP1+array[7]);
+        hBmp8 = (HBITMAP)bitmap8.GetSafeHandle();
+        picA8.SetBitmap(hBmp8);
+    }
 
-    bitmap4.LoadBitmap(IDB_BITMAP1+array[3]);
-    hBmp4 = (HBITMAP)bitmap4.GetSafeHandle();
-    picA4.SetBitmap(hBmp4);
-
-    bitmap5.LoadBitmap(IDB_BITMAP1+array[4]);
-    hBmp5 = (HBITMAP)bitmap5.GetSafeHandle();
-    picA5.SetBitmap(hBmp5);
-
-    bitmap6.LoadBitmap(IDB_BITMAP1+array[5]);
-    hBmp6 = (HBITMAP)bitmap6.GetSafeHandle();
-    picA6.SetBitmap(hBmp6);
-
-    bitmap7.LoadBitmap(IDB_BITMAP1+array[6]);
-    hBmp7 = (HBITMAP)bitmap7.GetSafeHandle();
-    picA7.SetBitmap(hBmp7);
-
-    bitmap8.LoadBitmap(IDB_BITMAP1+array[7]);
-    hBmp8 = (HBITMAP)bitmap8.GetSafeHandle();
-    picA8.SetBitmap(hBmp8);
-
-    bitmap9.LoadBitmap(IDB_BITMAP1+array[8]);
-    hBmp9 = (HBITMAP)bitmap9.GetSafeHandle();
-    picA9.SetBitmap(hBmp9);
+    if (curArray[8] != array[8])
+    {
+        bitmap9.LoadBitmap(IDB_BITMAP1+array[8]);
+        hBmp9 = (HBITMAP)bitmap9.GetSafeHandle();
+        picA9.SetBitmap(hBmp9);
+    }
+    picA = state;
 }
 
 void CEightFigureDlg::SetPicB(EightFigureState state)
@@ -409,14 +433,6 @@ void CEightFigureDlg::OnBnClickedButtonForward()
     str.Format(_T("%d"),cur+1);
     editCur.SetWindowTextW(str);
     sliderPos.SetPos(cur);
-    if (cur > 0)
-        btnForward.EnableWindow(TRUE);
-    else
-        btnForward.EnableWindow(FALSE);
-    if (cur < (int)path.size()-1)
-        btnNext.EnableWindow(TRUE);
-    else
-        btnNext.EnableWindow(FALSE);
 }
 
 void CEightFigureDlg::OnBnClickedButtonNext()
@@ -427,14 +443,6 @@ void CEightFigureDlg::OnBnClickedButtonNext()
     str.Format(_T("%d"),cur+1);
     editCur.SetWindowTextW(str);
     sliderPos.SetPos(cur);
-    if (cur > 0)
-        btnForward.EnableWindow(TRUE);
-    else
-        btnForward.EnableWindow(FALSE);
-    if (cur < (int)path.size()-1)
-        btnNext.EnableWindow(TRUE);
-    else
-        btnNext.EnableWindow(FALSE);
 }
 
 
@@ -465,6 +473,7 @@ void CEightFigureDlg::OnEnChangeEditCur()
     {
         cur = i_editCur - 1;
         SetPicA(path[cur]);
+        sliderPos.SetPos(cur);
     }
     UpdateData(FALSE);
 }
@@ -502,6 +511,18 @@ void CEightFigureDlg::OnBnClickedButtonPlay()
     // TODO: 在此添加控件通知处理程序代码
     if (path.empty())
     {
+        return;
+    }
+    if (cur == path.size()-1)
+    {
+        isPlay = false;
+        KillTimer(1);
+        btnPlay.SetWindowTextW(_T("播放"));
+        cur = 0;
+        SetPicA(path[cur]);
+        CString str;
+        str.Format(_T("%d"),cur+1);
+        sliderPos.SetPos(cur);
         return;
     }
     if (isPlay)
@@ -544,7 +565,7 @@ void CEightFigureDlg::OnTimer(UINT_PTR nIDEvent)
         if (cur == path.size() - 1)
         {
             isPlay = false;
-            btnPlay.SetWindowTextW(_T("播放"));
+            btnPlay.SetWindowTextW(_T("回到开始"));
             KillTimer(1);
         }
         break;
@@ -574,6 +595,21 @@ void CEightFigureDlg::OnNMCustomdrawSliderPos(NMHDR *pNMHDR, LRESULT *pResult)
             btnNext.EnableWindow(TRUE);
         else
             btnNext.EnableWindow(FALSE);
+        if (cur == path.size()-1)
+        {
+            btnPlay.SetWindowTextW(_T("回到开始"));
+        }
+        else
+        {
+            if (isPlay)
+            {
+                btnPlay.SetWindowTextW(_T("停止"));
+            }
+            else
+            {
+                btnPlay.SetWindowTextW(_T("播放"));
+            }
+        }
     }
     *pResult = 0;
 }
