@@ -102,4 +102,6 @@ private:
     CSliderCtrl sliderPos;
 public:
     afx_msg void OnNMCustomdrawSliderPos(NMHDR *pNMHDR, LRESULT *pResult);
+private:
+    CEdit editState;
 };

@@ -43,3 +43,8 @@ void SearchCore::GetPath(std::vector<EightFigureState> &path)
         path.push_back(this->path[this->path.size() - i]);
     }
 }
+
+int SearchCore::GetStateCount()
+{
+    return (close.size());
+}

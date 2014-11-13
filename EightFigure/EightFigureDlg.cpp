@@ -95,6 +95,7 @@ void CEightFigureDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_SLIDER1, sliderSpeed);
     DDX_Control(pDX, IDC_BUTTON_PLAY, btnPlay);
     DDX_Control(pDX, IDC_SLIDER_POS, sliderPos);
+    DDX_Control(pDX, IDC_EDIT_STATE, editState);
 }
 
 BEGIN_MESSAGE_MAP(CEightFigureDlg, CDialogEx)
@@ -197,11 +198,11 @@ void CEightFigureDlg::OnPaint()
 	{
         char data1[9] = {1,2,3,4,5,6,7,8,0};
         char data2[9] = {1,2,3,4,5,6,0,7,8};
-        picA.SetDataArray(data1);
+        EightFigureState s(data1);
         start.SetDataArray(data1);
         target.SetDataArray(data2);
 
-        SetPicA(picA);
+        SetPicA(s);
         SetPicB(start);
         SetPicC(target);
 		CDialogEx::OnPaint();
@@ -217,161 +218,47 @@ HCURSOR CEightFigureDlg::OnQueryDragIcon()
 
 void CEightFigureDlg::SetPicA(EightFigureState state)
 {
-    char array[9],curArray[9];
+    CStatic *pic[9] = {&picA1,&picA2,&picA3,&picA4,&picA5,&picA6,&picA7,&picA8,&picA9};
+    char array[9];
     state.GetDataArray(array);
-    picA.GetDataArray(curArray);
-
-    CBitmap bitmap1,bitmap2,bitmap3,bitmap4,bitmap5,bitmap6,bitmap7,bitmap8,bitmap9;
-    HBITMAP hBmp1,hBmp2,hBmp3,hBmp4,hBmp5,hBmp6,hBmp7,hBmp8,hBmp9;
-    if (curArray[0] != array[0])
+    for (int i = 0;i<9;i++)
     {
-        bitmap1.LoadBitmap(IDB_BITMAP1+array[0]);
-        hBmp1 = (HBITMAP)bitmap1.GetSafeHandle();
-        picA1.SetBitmap(hBmp1);
+        CBitmap bitmap;
+        HBITMAP hBmp;
+        bitmap.LoadBitmap(IDB_BITMAP1+array[i]);
+        hBmp = (HBITMAP)bitmap.GetSafeHandle();
+        pic[i]->SetBitmap(hBmp);
     }
-    if (curArray[1] != array[1])
-    {
-        bitmap2.LoadBitmap(IDB_BITMAP1+array[1]);
-        hBmp2 = (HBITMAP)bitmap2.GetSafeHandle();
-        picA2.SetBitmap(hBmp2);
-    }
-    if (curArray[2] != array[2])
-    {
-        bitmap3.LoadBitmap(IDB_BITMAP1+array[2]);
-        hBmp3 = (HBITMAP)bitmap3.GetSafeHandle();
-        picA3.SetBitmap(hBmp3);
-    }
-    if (curArray[3] != array[3])
-    {
-        bitmap4.LoadBitmap(IDB_BITMAP1+array[3]);
-        hBmp4 = (HBITMAP)bitmap4.GetSafeHandle();
-        picA4.SetBitmap(hBmp4);
-    }
-    if (curArray[4] != array[4])
-    {
-        bitmap5.LoadBitmap(IDB_BITMAP1+array[4]);
-        hBmp5 = (HBITMAP)bitmap5.GetSafeHandle();
-        picA5.SetBitmap(hBmp5);
-    }
-
-    if (curArray[5] != array[5])
-    {
-        bitmap6.LoadBitmap(IDB_BITMAP1+array[5]);
-        hBmp6 = (HBITMAP)bitmap6.GetSafeHandle();
-        picA6.SetBitmap(hBmp6);
-    }
-
-    if (curArray[6] != array[6])
-    {
-        bitmap7.LoadBitmap(IDB_BITMAP1+array[6]);
-        hBmp7 = (HBITMAP)bitmap7.GetSafeHandle();
-        picA7.SetBitmap(hBmp7);
-    }
-
-    if (curArray[7] != array[7])
-    {
-        bitmap8.LoadBitmap(IDB_BITMAP1+array[7]);
-        hBmp8 = (HBITMAP)bitmap8.GetSafeHandle();
-        picA8.SetBitmap(hBmp8);
-    }
-
-    if (curArray[8] != array[8])
-    {
-        bitmap9.LoadBitmap(IDB_BITMAP1+array[8]);
-        hBmp9 = (HBITMAP)bitmap9.GetSafeHandle();
-        picA9.SetBitmap(hBmp9);
-    }
-    picA = state;
 }
 
 void CEightFigureDlg::SetPicB(EightFigureState state)
 {
+    CStatic *pic[9] = {&picB1,&picB2,&picB3,&picB4,&picB5,&picB6,&picB7,&picB8,&picB9};
     char array[9];
     state.GetDataArray(array);
-
-    CBitmap bitmap1,bitmap2,bitmap3,bitmap4,bitmap5,bitmap6,bitmap7,bitmap8,bitmap9;
-    HBITMAP hBmp1,hBmp2,hBmp3,hBmp4,hBmp5,hBmp6,hBmp7,hBmp8,hBmp9;
-
-    bitmap1.LoadBitmap(IDB_BITMAP10+array[0]);
-    hBmp1 = (HBITMAP)bitmap1.GetSafeHandle();
-    picB1.SetBitmap(hBmp1);
-
-    bitmap2.LoadBitmap(IDB_BITMAP10+array[1]);
-    hBmp2 = (HBITMAP)bitmap2.GetSafeHandle();
-    picB2.SetBitmap(hBmp2);
-
-    bitmap3.LoadBitmap(IDB_BITMAP10+array[2]);
-    hBmp3 = (HBITMAP)bitmap3.GetSafeHandle();
-    picB3.SetBitmap(hBmp3);
-
-    bitmap4.LoadBitmap(IDB_BITMAP10+array[3]);
-    hBmp4 = (HBITMAP)bitmap4.GetSafeHandle();
-    picB4.SetBitmap(hBmp4);
-
-    bitmap5.LoadBitmap(IDB_BITMAP10+array[4]);
-    hBmp5 = (HBITMAP)bitmap5.GetSafeHandle();
-    picB5.SetBitmap(hBmp5);
-
-    bitmap6.LoadBitmap(IDB_BITMAP10+array[5]);
-    hBmp6 = (HBITMAP)bitmap6.GetSafeHandle();
-    picB6.SetBitmap(hBmp6);
-
-    bitmap7.LoadBitmap(IDB_BITMAP10+array[6]);
-    hBmp7 = (HBITMAP)bitmap7.GetSafeHandle();
-    picB7.SetBitmap(hBmp7);
-
-    bitmap8.LoadBitmap(IDB_BITMAP10+array[7]);
-    hBmp8 = (HBITMAP)bitmap8.GetSafeHandle();
-    picB8.SetBitmap(hBmp8);
-
-    bitmap9.LoadBitmap(IDB_BITMAP10+array[8]);
-    hBmp9 = (HBITMAP)bitmap9.GetSafeHandle();
-    picB9.SetBitmap(hBmp9);
+    for (int i = 0;i<9;i++)
+    {
+        CBitmap bitmap;
+        HBITMAP hBmp;
+        bitmap.LoadBitmap(IDB_BITMAP10+array[i]);
+        hBmp = (HBITMAP)bitmap.GetSafeHandle();
+        pic[i]->SetBitmap(hBmp);
+    }
 }
 
 void CEightFigureDlg::SetPicC(EightFigureState state)
 {
+    CStatic *pic[9] = {&picC1,&picC2,&picC3,&picC4,&picC5,&picC6,&picC7,&picC8,&picC9};
     char array[9];
     state.GetDataArray(array);
-
-    CBitmap bitmap1,bitmap2,bitmap3,bitmap4,bitmap5,bitmap6,bitmap7,bitmap8,bitmap9;
-    HBITMAP hBmp1,hBmp2,hBmp3,hBmp4,hBmp5,hBmp6,hBmp7,hBmp8,hBmp9;
-
-    bitmap1.LoadBitmap(IDB_BITMAP10+array[0]);
-    hBmp1 = (HBITMAP)bitmap1.GetSafeHandle();
-    picC1.SetBitmap(hBmp1);
-
-    bitmap2.LoadBitmap(IDB_BITMAP10+array[1]);
-    hBmp2 = (HBITMAP)bitmap2.GetSafeHandle();
-    picC2.SetBitmap(hBmp2);
-
-    bitmap3.LoadBitmap(IDB_BITMAP10+array[2]);
-    hBmp3 = (HBITMAP)bitmap3.GetSafeHandle();
-    picC3.SetBitmap(hBmp3);
-
-    bitmap4.LoadBitmap(IDB_BITMAP10+array[3]);
-    hBmp4 = (HBITMAP)bitmap4.GetSafeHandle();
-    picC4.SetBitmap(hBmp4);
-
-    bitmap5.LoadBitmap(IDB_BITMAP10+array[4]);
-    hBmp5 = (HBITMAP)bitmap5.GetSafeHandle();
-    picC5.SetBitmap(hBmp5);
-
-    bitmap6.LoadBitmap(IDB_BITMAP10+array[5]);
-    hBmp6 = (HBITMAP)bitmap6.GetSafeHandle();
-    picC6.SetBitmap(hBmp6);
-
-    bitmap7.LoadBitmap(IDB_BITMAP10+array[6]);
-    hBmp7 = (HBITMAP)bitmap7.GetSafeHandle();
-    picC7.SetBitmap(hBmp7);
-
-    bitmap8.LoadBitmap(IDB_BITMAP10+array[7]);
-    hBmp8 = (HBITMAP)bitmap8.GetSafeHandle();
-    picC8.SetBitmap(hBmp8);
-
-    bitmap9.LoadBitmap(IDB_BITMAP10+array[8]);
-    hBmp9 = (HBITMAP)bitmap9.GetSafeHandle();
-    picC9.SetBitmap(hBmp9);
+    for (int i = 0;i<9;i++)
+    {
+        CBitmap bitmap;
+        HBITMAP hBmp;
+        bitmap.LoadBitmap(IDB_BITMAP10+array[i]);
+        hBmp = (HBITMAP)bitmap.GetSafeHandle();
+        pic[i]->SetBitmap(hBmp);
+    }
 }
 
 
@@ -379,6 +266,7 @@ void CEightFigureDlg::OnBnClickedOk()
 {
     // TODO: 在此添加控件通知处理程序代码
     isPlay = false;
+    KillTimer(1);
     btnPlay.EnableWindow(FALSE);
     btnSearch.EnableWindow(FALSE);
     SearchCore *search;
@@ -408,8 +296,10 @@ void CEightFigureDlg::OnBnClickedOk()
         str.Format(_T("%d"),cur+1);
         editCur.SetWindowTextW(str);
         str.Format(_T("%d(ms)"),search->GetTime());
-        sliderPos.SetRange(0,path.size()-1);
         editTime.SetWindowTextW(str);
+        str.Format(_T("%d"),search->GetStateCount());
+        editState.SetWindowTextW(str);
+        sliderPos.SetRange(0,path.size()-1);
         btnSearch.EnableWindow(TRUE);
         btnForward.EnableWindow(FALSE);
         btnNext.EnableWindow(TRUE);

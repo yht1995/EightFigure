@@ -4,12 +4,13 @@
 
 AStar::AStar(void)
 {
+    route.clear();
 }
 
 AStar::AStar(EightFigureState startState,EightFigureState targetState)
     :SearchCore(startState,targetState)
 {
-
+    route.clear();
 }
 
 
@@ -26,7 +27,7 @@ int AStar::ClacDifference(EightFigureState a,EightFigureState b)
     int vaule = 0;
     for (int i = 0;i<9;i++)
     {
-        if (aArray[i]!=aArray[i])
+        if (aArray[i]!=bArray[i])
         {
             vaule++;
         }
@@ -72,7 +73,7 @@ bool AStar::Search()
     startTime = clock();
     EightFigureState state,temp;
     startState.depth = 0;
-    startState.fVaule = ClacManhattan(startState,targetState);
+    startState.fVaule = 10*ClacManhattan(startState,targetState);
     close.insert(startState.data);
     route.push_back(startState);
     q.push(startState);
@@ -99,7 +100,7 @@ bool AStar::Search()
             if (temp.Move((Direction)i))
             {
                 temp.depth = state.depth + 1;
-                temp.fVaule = temp.depth + ClacManhattan(temp,targetState);
+                temp.fVaule = temp.depth + 10*ClacManhattan(temp,targetState);
                 if (!close.count(temp.data))
                 {
                     temp.selfIdx = route.size();

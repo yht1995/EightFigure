@@ -1,7 +1,6 @@
 #pragma once
 #include "stdafx.h"
 #include "EightFigureState.h"
-const int MAXSTATES = 362882;
 class SearchCore
 {
 public:
@@ -12,6 +11,7 @@ public:
     void SetTarget(EightFigureState state);
     void GetPath(std::vector<EightFigureState> &path);
     int GetTime();
+    int GetStateCount();
     virtual bool Search() = 0;
 protected:
     EightFigureState startState;
