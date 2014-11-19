@@ -209,15 +209,20 @@ void CEightFigureDlg::OnPaint()
 	}
 	else
 	{
-        char data1[9] = {1,2,3,4,5,6,7,8,0};
-        char data2[9] = {1,2,3,4,5,6,0,7,8};
-        EightFigureState s(data1);
-        start.SetDataArray(data1);
-        target.SetDataArray(data2);
+        static bool init = true;
+        if(init)
+        {
+            char data1[9] = {6,5,3,8,2,0,4,1,7};
+            char data2[9] = {5,1,0,6,4,8,2,7,3};
+            EightFigureState s(data1);
+            start.SetDataArray(data1);
+            target.SetDataArray(data2);
 
-        SetPicA(s);
-        SetPicB(start);
-        SetPicC(target);
+            SetPicA(s);
+            SetPicB(start);
+            SetPicC(target);
+            init = false;
+        }
 		CDialogEx::OnPaint();
 	}
 }
