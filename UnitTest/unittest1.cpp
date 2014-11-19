@@ -72,8 +72,8 @@ namespace UnitTest
             char data2[9] = {5,1,0,6,4,8,2,7,3};
             EightFigureState state1(data1);
             EightFigureState state2(data2);
-            DFS dfs(state1,state2);
-            Assert::AreEqual(dfs.Search(),true);
+            DFS dfs(state1,state2,1);
+            Assert::AreEqual(dfs.Search(),false);
         }
     };
 
@@ -117,7 +117,7 @@ namespace UnitTest
             char data2[9] = {5,1,0,6,4,8,2,7,3};
             EightFigureState state1(data1);
             EightFigureState state2(data2);
-            AStar aStar(state1,state2);
+            AStar aStar(state1,state2,0);
             Assert::AreEqual(aStar.Search(),true);
         }
     };

@@ -104,4 +104,12 @@ public:
     afx_msg void OnNMCustomdrawSliderPos(NMHDR *pNMHDR, LRESULT *pResult);
 private:
     CEdit editState;
+public:
+    afx_msg void OnCbnSelchangeComboType();
+    CStatic textDepth;
+    CStatic textFunc;
+    CEdit editDepth;
+    CComboBox comboFunc;
+private:
+    int depth;
 };

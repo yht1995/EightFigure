@@ -39,6 +39,7 @@ inline void EightFigureState::operator=(EightFigureState c)
     this->data = c.data;
     this->selfIdx = c.selfIdx;
     this->fatherIdx = c.fatherIdx;
+    this->depth = c.depth;
 }
 
 inline void EightFigureState::swap(char& a,char& b)

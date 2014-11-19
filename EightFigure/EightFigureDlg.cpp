@@ -50,6 +50,7 @@ END_MESSAGE_MAP()
 CEightFigureDlg::CEightFigureDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CEightFigureDlg::IDD, pParent)
     , i_editCur(0)
+    , depth(0)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -96,6 +97,12 @@ void CEightFigureDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_BUTTON_PLAY, btnPlay);
     DDX_Control(pDX, IDC_SLIDER_POS, sliderPos);
     DDX_Control(pDX, IDC_EDIT_STATE, editState);
+    DDX_Control(pDX, IDC_STATIC_DEPTH, textDepth);
+    DDX_Control(pDX, IDC_STATIC_FUNC, textFunc);
+    DDX_Control(pDX, IDC_EDIT_DEPTH, editDepth);
+    DDX_Control(pDX, IDC_COMBO_FUNC, comboFunc);
+    DDX_Text(pDX, IDC_EDIT_DEPTH, depth);
+	DDV_MinMaxInt(pDX, depth, 0, 999999);
 }
 
 BEGIN_MESSAGE_MAP(CEightFigureDlg, CDialogEx)
@@ -111,6 +118,7 @@ BEGIN_MESSAGE_MAP(CEightFigureDlg, CDialogEx)
     ON_BN_CLICKED(IDC_BUTTON_PLAY, &CEightFigureDlg::OnBnClickedButtonPlay)
     ON_WM_TIMER()
     ON_NOTIFY(NM_CUSTOMDRAW, IDC_SLIDER_POS, &CEightFigureDlg::OnNMCustomdrawSliderPos)
+    ON_CBN_SELCHANGE(IDC_COMBO_TYPE, &CEightFigureDlg::OnCbnSelchangeComboType)
 END_MESSAGE_MAP()
 
 
@@ -150,10 +158,17 @@ BOOL CEightFigureDlg::OnInitDialog()
     comboType.AddString(_T("BFS"));
     comboType.AddString(_T("A*"));
     comboType.SetCurSel(0);
+    comboFunc.AddString(_T("不在位数"));
+    comboFunc.AddString(_T("曼哈顿距离"));
+    comboFunc.SetCurSel(0);
     btnNext.EnableWindow(FALSE);
     btnForward.EnableWindow(FALSE);
     sliderSpeed.SetRange(0,100);
     sliderSpeed.SetPos(70);
+    textDepth.EnableWindow(FALSE);
+    editDepth.EnableWindow(FALSE);
+    textFunc.EnableWindow(TRUE);
+    comboFunc.EnableWindow(TRUE);
     srand((unsigned int)time(NULL));
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -273,13 +288,15 @@ void CEightFigureDlg::OnBnClickedOk()
     switch (comboType.GetCurSel())
     {
     case(2):
-        search = new DFS(start,target);
+        UpdateData(TRUE);
+        search = new DFS(start,target,depth);
+        UpdateData(FALSE);
         break;
     case(1):
         search = new BFS(start,target);
         break;
     case(0):
-        search = new AStar(start,target);
+        search = new AStar(start,target,comboFunc.GetCurSel());
         break;
     default:
         btnSearch.EnableWindow(TRUE);
@@ -299,6 +316,7 @@ void CEightFigureDlg::OnBnClickedOk()
         editTime.SetWindowTextW(str);
         str.Format(_T("%d"),search->GetStateCount());
         editState.SetWindowTextW(str);
+        sliderPos.EnableWindow(TRUE);
         sliderPos.SetRange(0,path.size()-1);
         btnSearch.EnableWindow(TRUE);
         btnForward.EnableWindow(FALSE);
@@ -308,10 +326,11 @@ void CEightFigureDlg::OnBnClickedOk()
     }
     else
     {
-        MessageBox(_T("无解"), _T("出错啦"), MB_OK | MB_ICONINFORMATION);
+        MessageBox(_T("不行啊，求不出解"), _T("出错啦"), MB_OK | MB_ICONINFORMATION);
         btnSearch.EnableWindow(TRUE);
         btnNext.EnableWindow(FALSE);
         btnForward.EnableWindow(FALSE);
+        sliderPos.EnableWindow(FALSE);
     }
 }
 
@@ -502,4 +521,33 @@ void CEightFigureDlg::OnNMCustomdrawSliderPos(NMHDR *pNMHDR, LRESULT *pResult)
         }
     }
     *pResult = 0;
+}
+
+
+void CEightFigureDlg::OnCbnSelchangeComboType()
+{
+    // TODO: 在此添加控件通知处理程序代码
+    switch (comboType.GetCurSel())
+    {
+    case(0):
+        textDepth.EnableWindow(FALSE);
+        editDepth.EnableWindow(FALSE);
+        textFunc.EnableWindow(TRUE);
+        comboFunc.EnableWindow(TRUE);
+        break;
+    case(1):
+        textDepth.EnableWindow(FALSE);
+        editDepth.EnableWindow(FALSE);
+        textFunc.EnableWindow(FALSE);
+        comboFunc.EnableWindow(FALSE);
+        break;
+    case(2):
+        textDepth.EnableWindow(TRUE);
+        editDepth.EnableWindow(TRUE);
+        textFunc.EnableWindow(FALSE);
+        comboFunc.EnableWindow(FALSE);
+        break;
+    default:
+        break;
+    }
 }
