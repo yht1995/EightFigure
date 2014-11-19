@@ -6,7 +6,7 @@ class DFS :
 {
 public:
     DFS(void);
-    DFS(EightFigureState startState,EightFigureState targetState);
+    DFS(EightFigureState startState,EightFigureState targetState,int depth);
     bool Search();
     void SetDepth(int depth);
     ~DFS(void);

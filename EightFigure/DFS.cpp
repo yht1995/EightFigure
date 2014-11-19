@@ -7,10 +7,11 @@ DFS::DFS(void)
     route.clear();
 }
 
-DFS::DFS(EightFigureState startState,EightFigureState targetState)
+DFS::DFS(EightFigureState startState,EightFigureState targetState,int depth)
     :SearchCore(startState,targetState)
 {
     route.clear();
+    SetDepth(depth);
 }
 
 
@@ -22,6 +23,7 @@ bool DFS::Search()
 {
     startTime = clock();
     EightFigureState state,temp;
+    startState.depth = 0;
     route.push_back(startState);
     close.insert(startState.data);
     s.push(startState);
@@ -29,6 +31,15 @@ bool DFS::Search()
     {
         state = s.top();
         s.pop();
+        while((depth != 0) && (state.depth > depth))
+        {
+            state = s.top();
+            s.pop();
+            if (s.empty())
+            {
+                return false;
+            }
+        }
         if (state == targetState)
         {
             path.clear();
@@ -49,6 +60,7 @@ bool DFS::Search()
             {
                 if (!close.count(temp.data))
                 {
+                    temp.depth = state.depth + 1;
                     temp.selfIdx = route.size();
                     temp.fatherIdx = state.selfIdx;
                     route.push_back(temp);
