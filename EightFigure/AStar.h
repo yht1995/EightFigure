@@ -13,10 +13,12 @@ struct cmp{
 };
 public:
     AStar(void);
-    AStar(EightFigureState startState,EightFigureState targetState);
+    AStar(EightFigureState startState,EightFigureState targetState,int type);
     ~AStar(void);
     bool Search();
+    void SetFunc(int type);
 private:
+    int (AStar::*clac)(EightFigureState a,EightFigureState b);
     std::priority_queue<EightFigureState,std::vector<EightFigureState>,cmp> q;
     std::vector<EightFigureState> route;
     int ClacDifference(EightFigureState a,EightFigureState b);
