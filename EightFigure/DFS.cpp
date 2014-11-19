@@ -37,6 +37,7 @@ bool DFS::Search()
             s.pop();
             if (s.empty())
             {
+                stopTime = clock();
                 return false;
             }
         }
