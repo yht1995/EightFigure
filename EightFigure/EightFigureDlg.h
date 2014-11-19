@@ -78,6 +78,12 @@ private:
     CEdit editTime;
     CSliderCtrl sliderSpeed;
     CButton btnPlay;
+    CEdit editState;
+    CStatic textDepth;
+    CStatic textFunc;
+    CEdit editDepth;
+    CComboBox comboFunc;
+    CSliderCtrl sliderPos;
 
     int cur;
     int timeDelta;
@@ -98,18 +104,6 @@ public:
     afx_msg void OnBnClickedButtonNext();
     afx_msg void OnBnClickedButtonSetStart();
     afx_msg void OnEnChangeEditCur();
-private:
-    CSliderCtrl sliderPos;
-public:
-    afx_msg void OnNMCustomdrawSliderPos(NMHDR *pNMHDR, LRESULT *pResult);
-private:
-    CEdit editState;
-public:
     afx_msg void OnCbnSelchangeComboType();
-    CStatic textDepth;
-    CStatic textFunc;
-    CEdit editDepth;
-    CComboBox comboFunc;
-private:
-    int depth;
+    afx_msg void OnNMCustomdrawSliderPos(NMHDR *pNMHDR, LRESULT *pResult);
 };

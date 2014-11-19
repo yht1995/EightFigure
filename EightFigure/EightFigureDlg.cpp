@@ -50,7 +50,6 @@ END_MESSAGE_MAP()
 CEightFigureDlg::CEightFigureDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CEightFigureDlg::IDD, pParent)
     , i_editCur(0)
-    , depth(0)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -101,8 +100,6 @@ void CEightFigureDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_STATIC_FUNC, textFunc);
     DDX_Control(pDX, IDC_EDIT_DEPTH, editDepth);
     DDX_Control(pDX, IDC_COMBO_FUNC, comboFunc);
-    DDX_Text(pDX, IDC_EDIT_DEPTH, depth);
-	DDV_MinMaxInt(pDX, depth, 0, 999999);
 }
 
 BEGIN_MESSAGE_MAP(CEightFigureDlg, CDialogEx)
@@ -169,6 +166,7 @@ BOOL CEightFigureDlg::OnInitDialog()
     editDepth.EnableWindow(FALSE);
     textFunc.EnableWindow(TRUE);
     comboFunc.EnableWindow(TRUE);
+    editDepth.SetWindowTextW(_T("0"));
     srand((unsigned int)time(NULL));
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -233,21 +231,27 @@ HCURSOR CEightFigureDlg::OnQueryDragIcon()
 
 void CEightFigureDlg::SetPicA(EightFigureState state)
 {
+    static char last[9] = {-1,-1,-1,-1,-1,-1,-1,-1,-1};
     CStatic *pic[9] = {&picA1,&picA2,&picA3,&picA4,&picA5,&picA6,&picA7,&picA8,&picA9};
     char array[9];
     state.GetDataArray(array);
     for (int i = 0;i<9;i++)
     {
-        CBitmap bitmap;
-        HBITMAP hBmp;
-        bitmap.LoadBitmap(IDB_BITMAP1+array[i]);
-        hBmp = (HBITMAP)bitmap.GetSafeHandle();
-        pic[i]->SetBitmap(hBmp);
+        if (array[i] != last[i])
+        {
+            CBitmap bitmap;
+            HBITMAP hBmp;
+            bitmap.LoadBitmap(IDB_BITMAP1+array[i]);
+            hBmp = (HBITMAP)bitmap.GetSafeHandle();
+            pic[i]->SetBitmap(hBmp);
+            last[i] = array[i];
+        }
     }
 }
 
 void CEightFigureDlg::SetPicB(EightFigureState state)
 {
+
     CStatic *pic[9] = {&picB1,&picB2,&picB3,&picB4,&picB5,&picB6,&picB7,&picB8,&picB9};
     char array[9];
     state.GetDataArray(array);
@@ -285,12 +289,12 @@ void CEightFigureDlg::OnBnClickedOk()
     btnPlay.EnableWindow(FALSE);
     btnSearch.EnableWindow(FALSE);
     SearchCore *search;
+    CString dep,str;
     switch (comboType.GetCurSel())
     {
     case(2):
-        UpdateData(TRUE);
-        search = new DFS(start,target,depth);
-        UpdateData(FALSE);
+        editDepth.GetWindowTextW(dep);
+        search = new DFS(start,target,_ttoi(dep));
         break;
     case(1):
         search = new BFS(start,target);
@@ -307,7 +311,6 @@ void CEightFigureDlg::OnBnClickedOk()
         search->GetPath(path);
         SetPicA(path[0]);
         cur = 0;
-        CString str;
         str.Format(_T("%d"),path.size());
         editTot.SetWindowTextW(str);
         str.Format(_T("%d"),cur+1);
@@ -326,11 +329,21 @@ void CEightFigureDlg::OnBnClickedOk()
     }
     else
     {
+        path.clear();
         MessageBox(_T("不行啊，求不出解"), _T("出错啦"), MB_OK | MB_ICONINFORMATION);
         btnSearch.EnableWindow(TRUE);
         btnNext.EnableWindow(FALSE);
         btnForward.EnableWindow(FALSE);
+        btnNext.EnableWindow(FALSE);
+        btnPlay.EnableWindow(FALSE);
         sliderPos.EnableWindow(FALSE);
+        str.Format(_T("%d"),0);
+        editTot.SetWindowTextW(str);
+        str.Format(_T("%d"),0);
+        editCur.SetWindowTextW(str);
+        str.Format(_T("%d(ms)"),search->GetTime());
+        editTime.SetWindowTextW(str);
+        str.Format(_T("%d"),search->GetStateCount());
     }
 }
 
