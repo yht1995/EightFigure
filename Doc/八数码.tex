@@ -55,14 +55,15 @@
 \subsection{界面}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{1.png}
+\includegraphics[width=0.6\textwidth]{1.png}
 \caption{界面} 
 \end{figure}
 \subsection{操作说明}
 \subsubsection{始末状态}
 始末状态可以手动设置，也可以随机生成。（始末状态会通过逆序数方法检查是否可解，如果不可解就会提示用户；随机生成的组合都是可解的）
 \subsubsection{搜索方法}
-程序提供了3种搜索方法，可以通过下拉列表选择。
+程序提供了3种搜索方法，可以通过下拉列表选择。\par
+在A*算法中可以选择估值函数，在DFS算法中可以设置搜索深度。
 \subsubsection{结果演示}
 结果会在左侧显示，操作方法与普通视频播放器的风格类似，右侧给出了搜索用时和访问的状态数。
 \section{程序设计}
@@ -117,19 +118,116 @@ protected:
     clock_t stopTime;
 };
 \end{lstlisting}
-\subsubsection{搜索方法}
-
+\subsubsection{搜索算法}
+【BFS】
+ 广搜采用队列实现，部分代码如下：
+ \begin{lstlisting}
+ bool BFS::Search()
+{
+    EightFigureState state,temp;
+    route.push_back(startState);
+    close.insert(startState.data);
+    q.push(startState);
+    do 
+    {
+        state = q.front();
+        q.pop();
+        if (state == targetState)
+        {...}
+        for (int i = 0;i<4;i++)
+        {
+            temp = state;
+            if (temp.Move((Direction)i))
+            {
+                if (!close.count(temp.data))
+                {
+                    q.push(temp);
+                    close.insert(temp.data);
+                }
+            }
+        }
+    }while (!q.empty());
+    return false;
+}
+ \end{lstlisting}
+【DFS】
+深搜采用堆栈实现，部分代码如下：
+ \begin{lstlisting}
+ bool DFS::Search()
+{
+    EightFigureState state,temp;
+    startState.depth = 0;
+    route.push_back(startState);
+    close.insert(startState.data);
+    s.push(startState);
+    do 
+    {
+        state = s.top();
+        s.pop();
+        while((depth != 0) && (state.depth > depth))
+        {...}
+        if (state == targetState)
+        {...}
+        for (int i = 0;i<4;i++)
+        {
+            temp = state;
+            if (temp.Move((Direction)i))
+            {
+                if (!close.count(temp.data))
+                {
+                    temp.depth = state.depth + 1;
+                    s.push(temp);
+                    close.insert(temp.data);
+                }
+            }
+        }
+    }while (!s.empty());
+    return false;
+}
+ \end{lstlisting}
+【A*】
+A*算法采用优先队列实现，使用函数值f为关键码的优先队列，部分代码如下：
+ \begin{lstlisting}
+ bool AStar::Search()
+{
+    EightFigureState state,temp;
+    startState.depth = 0;
+    startState.fVaule = 10*(this->*clac)(startState,targetState);
+    close.insert(startState.data);
+    q.push(startState);
+    do 
+    {
+        state = q.top();
+        q.pop();
+        if (state == targetState)
+        {...}
+        for (int i = 0;i<4;i++)
+        {
+            temp = state;
+            if (temp.Move((Direction)i))
+            {
+                temp.depth = state.depth + 1;
+                temp.fVaule = temp.depth + 10*(this->*clac)(temp,targetState);
+                if (!close.count(temp.data))
+                {
+                    q.push(temp);
+                    close.insert(temp.data);
+                }
+            }
+        }
+    }while (!q.empty());
+    return false;
+}
+ \end{lstlisting}
 \section{设计心得}
 \subsection{收获}
-感觉在这次程序设计中类的编写和封装比上一次的实现有了提高，整个编程思路变清晰了。\par
+感觉在这次程序设计中类的编写和封装比上一次的实现有了提高，整个编程思路显得清晰了一些。\par
 而且在这次开发中使用了VS的单元测试框架，进行了一些单元测试，提高了开发的成功率，减少了调试消耗的时间，单元测试是一种很好的方法，以后会一直使用。
 \begin{figure}[H]
 \centering
 \includegraphics{2.png}
 \caption{单元测试} 
 \end{figure}
-\subsection{问题}
-A*算法中，估值函数的选取是一个值得分析的问题。
 \section{文件清单}
 \begin{itemize}
 \item src$\backslash$ 工程文件
@@ -145,7 +243,6 @@ A*算法中，估值函数的选取是一个值得分析的问题。
 \end{itemize}
 \item src$\backslash$ UnitTest $\backslash$ 单元测试
 \end{itemize}
-
 \item bin$\backslash$ 可执行文件
 \item doc$\backslash$ 文档
 \end{itemize}
