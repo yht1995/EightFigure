@@ -138,3 +138,8 @@ bool EightFigureState::CanSolve(EightFigureState c)
 {
     return((this->InverseOrder()%2) == (c.InverseOrder()%2));
 }
+
+bool operator < (EightFigureState a,EightFigureState b)
+{
+    return (a.fVaule > b.fVaule);
+}

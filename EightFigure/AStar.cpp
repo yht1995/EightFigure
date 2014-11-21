@@ -57,7 +57,7 @@ int AStar::ClacManhattan(EightFigureState a,EightFigureState b)
     int vaule = 0;
     for (int i = 0;i<9;i++)
     {
-        for (int j = i;j<9;j++)
+        for (int j = 0;j<9;j++)
         {
             if (aArray[i] == bArray[j])
             {
@@ -74,7 +74,7 @@ bool AStar::Search()
     startTime = clock();
     EightFigureState state,temp;
     startState.depth = 0;
-    startState.fVaule = 10*(this->*clac)(startState,targetState);
+    startState.fVaule = (this->*clac)(startState,targetState);
     close.insert(startState.data);
     route.push_back(startState);
     q.push(startState);
@@ -101,13 +101,13 @@ bool AStar::Search()
             if (temp.Move((Direction)i))
             {
                 temp.depth = state.depth + 1;
-                temp.fVaule = temp.depth + 10*(this->*clac)(temp,targetState);
+                temp.fVaule = temp.depth + (this->*clac)(temp,targetState);
                 if (!close.count(temp.data))
                 {
                     temp.selfIdx = route.size();
                     temp.fatherIdx = state.selfIdx;
-                    route.push_back(temp);
                     q.push(temp);
+                    route.push_back(temp);
                     close.insert(temp.data);
                 }
             }

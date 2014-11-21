@@ -11,6 +11,7 @@ class EightFigureState
 {
 private:
     void swap(char& a,char& b);
+friend bool operator < (EightFigureState a,EightFigureState b);
 public:
     int data;
     int depth;
@@ -40,6 +41,7 @@ inline void EightFigureState::operator=(EightFigureState c)
     this->selfIdx = c.selfIdx;
     this->fatherIdx = c.fatherIdx;
     this->depth = c.depth;
+    this->fVaule = c.fVaule;
 }
 
 inline void EightFigureState::swap(char& a,char& b)
