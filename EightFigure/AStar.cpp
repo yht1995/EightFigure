@@ -54,19 +54,19 @@ int AStar::ClacManhattan(EightFigureState a,EightFigureState b)
     {2, 3, 4, 1, 2, 3, 0, 1, 2},  
     {3, 2, 3, 2, 1, 2, 1, 0, 1},  
     {4, 3, 2, 3, 2, 1, 2, 1, 0}};
-    int vaule = 0;
+    int distance = 0;
     for (int i = 0;i<9;i++)
     {
         for (int j = 0;j<9;j++)
         {
             if (aArray[i] == bArray[j])
             {
-                vaule += Manhattan[i][j];
+                distance += Manhattan[i][j];
                 break;
             }
         }
     }
-    return vaule;
+    return distance;
 }
 
 bool AStar::Search()
@@ -74,7 +74,7 @@ bool AStar::Search()
     startTime = clock();
     EightFigureState state,temp;
     startState.depth = 0;
-    startState.fVaule = (this->*clac)(startState,targetState);
+    startState.fValue = (this->*clac)(startState,targetState);
     close.insert(startState.data);
     route.push_back(startState);
     q.push(startState);
@@ -101,7 +101,7 @@ bool AStar::Search()
             if (temp.Move((Direction)i))
             {
                 temp.depth = state.depth + 1;
-                temp.fVaule = temp.depth + (this->*clac)(temp,targetState);
+                temp.fValue = temp.depth + (this->*clac)(temp,targetState);
                 if (!close.count(temp.data))
                 {
                     temp.selfIdx = route.size();

@@ -17,7 +17,7 @@ public:
     int depth;
     int selfIdx;
     int fatherIdx;
-    int fVaule;
+    int fValue;
     EightFigureState(void);
     EightFigureState(char *data);
     ~EightFigureState(void);
@@ -41,7 +41,7 @@ inline void EightFigureState::operator=(EightFigureState c)
     this->selfIdx = c.selfIdx;
     this->fatherIdx = c.fatherIdx;
     this->depth = c.depth;
-    this->fVaule = c.fVaule;
+    this->fValue = c.fValue;
 }
 
 inline void EightFigureState::swap(char& a,char& b)
