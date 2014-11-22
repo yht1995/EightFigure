@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AStar" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAAAAAABAgAAAAAABAGCAAAAgABA=</HashCode>
+      <FileName>AStar.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BFS" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABgAABAAAAAAAAAACAAAAAgAAA=</HashCode>
+      <FileName>bfs.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DFS" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAABAABAAAAAAAAAAIAIIAAgAAA=</HashCode>
+      <FileName>DFS.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SearchCore" Collapsed="true">
+    <Position X="2.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AUAAQAAAAAACAgAAAAgiAAAEAAACAAAAAIIAAAAgAAI=</HashCode>
+      <FileName>SearchCore.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EightFigureState" Collapsed="true">
+    <Position X="7" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAIAAIAAAAAAABSAAIACAQAAAAQIwIEAAAAA=</HashCode>
+      <FileName>EightFigureState.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CEightFigureDlg" Collapsed="true">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ELDY0RGEgQBsgEYjoNAWAKADCJSLAoUBICAMAAAYAA8=</HashCode>
+      <FileName>EightFigureDlg.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Microsoft YaHei UI" Size="9" />
+</ClassDiagram>
