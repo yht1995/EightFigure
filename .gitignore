@@ -1,5 +1,3 @@
-# git ignore file
-
 Thumbs.db
 *.obj
 *.exe
@@ -19,11 +17,11 @@ Thumbs.db
 *.cache
 *.ilk
 *.log
-*.ipch
-*.opensdf
+*.aux
+*.out
+*.toc
 [Bb]in
 [Dd]ebug*/
-ipch/
 *.lib
 *.sbr
 obj/
@@ -34,8 +32,5 @@ _ReSharper*/
 $tf*/
 /ipch
 /*.sdf
-/Doc/*.out
-/Doc/*.pdf
-/Doc/*.toc
-/Doc/*.aux
-/Doc/*.log
+/slide/*.nav
+/slide/*.snm
